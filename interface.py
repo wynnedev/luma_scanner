@@ -110,6 +110,8 @@ class App(tk.Frame):
         # format strings for write
         title += '\n'
         
+        # Write data to file CSV style
+        self.out_file.write(title)
         for file in os.listdir(self.folder.directory):
             
             # locate image files of proper type
@@ -139,7 +141,7 @@ class App(tk.Frame):
                     # add additional data item to data string
                     data_string += "," + str(image_p.luma_angle_scan(self.HALF))
 
-                # run wide angle scan if use selects
+                # run wide angle scan if user selects
                 if self.run_wide_angle.get() == 1:
                     # add additional data item to data string
                     data_string += "," + str(image_p.luma_angle_scan(self.WIDE))
@@ -150,14 +152,10 @@ class App(tk.Frame):
                     data_string += "," + str(image_p.get_offset())
         
                 data_string += '\n'
-                
-                # Write data to file CSV style
-                self.out_file.write(title)
-                self.out_file.write(str(data_string) + '\n')
-            
                 # print file name to UI
                 self.status_text.insert(3.0, "Complete! " + data_string)
-            
+                self.out_file.write(str(data_string))
+                
         self.status_text.config(background="green", foreground="white")
         self.status_text.insert(3.0, "\n***ALL FILES PROCESSED***\n")
         self.out_file.close()
